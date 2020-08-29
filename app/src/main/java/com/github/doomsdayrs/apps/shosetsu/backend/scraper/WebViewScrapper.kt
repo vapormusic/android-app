@@ -1,13 +1,9 @@
 package com.github.doomsdayrs.apps.shosetsu.backend.scraper
 
-import android.os.AsyncTask
 import android.util.Log
-import com.zhkrb.cloudflare_scrape_android.Cloudflare
-import com.zhkrb.cloudflare_scrape_android.Cloudflare.cfCallback
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
-import java.net.HttpCookie
 import java.util.concurrent.ExecutionException
 
 /*
@@ -71,13 +67,8 @@ object WebViewScrapper {
         if (url != null) {
             Log.i("URL load", url)
             try {
-                return if (cloudflare) {
-                    val cf = Cloudflare(url)
-                    cf.user_agent = ua
-                    Jsoup.connect(url).cookies(Cloudflare.List2Map(GetCookies().execute(cf).get())).get()
-                } else {
-                    Jsoup.connect(url).get()
-                }
+                return Jsoup.connect(url).get()
+
             } catch (e: IOException) {
                 e.printStackTrace()
             } catch (e: InterruptedException) {
@@ -88,7 +79,7 @@ object WebViewScrapper {
         }
         return null
     }
-
+/*
     internal class GetCookies : AsyncTask<Cloudflare?, Void?, List<HttpCookie>?>() {
         var cookies: List<HttpCookie>? = null
         var status = 0
@@ -109,7 +100,7 @@ object WebViewScrapper {
             }
             return cookies
         }
-    } /*
+    }
     private void clear() {
         activity.runOnUiThread(() -> webView.loadUrl("about:blank"));
     }
