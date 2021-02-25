@@ -56,14 +56,14 @@ class GithubAppUpdateDataSource(
 	override suspend fun loadAppUpdate(): HResult<AppUpdateEntity> {
 		okHttpClient.quickie(SHOSETSU_GIT_UPDATE_URL)
 			.use { gitResponse ->
-				gitResponse.takeIf { it.code == 200 }?.use {
-					return gitResponse.body?.use { responseBody ->
+				gitResponse.takeIf { it.code() == 200 }?.use {
+					return gitResponse.body()?.use { responseBody ->
 						successResult(
 							Json.decodeFromString<AppUpdateDTO>(responseBody.string()).convertTo()
 						)
 					} ?: errorResult(ERROR_NETWORK, "Response body null")
 				}
-				return errorResult(ERROR_HTTP_ERROR, HTTPException(gitResponse.code))
+				return errorResult(ERROR_HTTP_ERROR, HTTPException(gitResponse.code()))
 			}
 	}
 

@@ -6,7 +6,7 @@
     android:installLocation="auto">
 
     <dist:module dist:instant="true" />
-
+    <uses-sdk tools:overrideLibrary="com.zhkrb.cloudflare_scrape_webview"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

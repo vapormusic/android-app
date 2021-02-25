@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.multidex.MultiDexApplication
 import app.shosetsu.android.backend.database.DBHelper
 import app.shosetsu.android.common.consts.Notifications
 import app.shosetsu.android.common.consts.ShortCuts
@@ -30,12 +31,14 @@ import org.acra.config.CoreConfigurationBuilder
 import org.acra.config.HttpSenderConfigurationBuilder
 import org.acra.data.StringFormat
 import org.acra.sender.HttpSender
+import org.conscrypt.Conscrypt
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import java.security.Security
 
 /*
  * This file is part of shosetsu.
@@ -64,7 +67,7 @@ import org.kodein.di.generic.singleton
 	resText = R.string.crashDialogText,
 	resTheme = R.style.AppTheme_CrashReport
 )
-class ShosetsuApplication : Application(), LifecycleEventObserver, KodeinAware {
+class ShosetsuApplication : MultiDexApplication(), LifecycleEventObserver, KodeinAware {
 	private val extLibRepository by instance<IExtensionLibrariesRepository>()
 	private val okHttpClient by instance<OkHttpClient>()
 	private val initializeExtensionsUseCase: InitializeExtensionsUseCase by instance()
@@ -91,6 +94,7 @@ class ShosetsuApplication : Application(), LifecycleEventObserver, KodeinAware {
 	}
 
 	override fun onCreate() {
+		Security.insertProviderAt(Conscrypt.newProvider(), 1)
 		ShosetsuLuaLib.httpClient = okHttpClient
 		ShosetsuLuaLib.libLoader = libLoader@{ name ->
 			Log.i("LibraryLoaderSync", "Loading:\t$name")

@@ -24,9 +24,11 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId 'com.github.doomsdayrs.apps.shosetsu'
-        minSdkVersion 22
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 26
+        renderscriptTargetApi 21
+        renderscriptSupportModeEnabled true
         versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -177,8 +179,15 @@ dependencies {
     // Cloud flare calculator
     implementation 'com.zhkrb.cloudflare-scrape-android:scrape-webview:0.0.3'
 
+
     // Network
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation ('com.squareup.okhttp3:okhttp'){
+        version {
+            strictly '3.12.12'
+        }
+    }
+    implementation "com.squareup.okio:okio:2.9.0"
+    implementation 'org.conscrypt:conscrypt-android:2.5.1'
 
     // Kotlin libraries
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21"

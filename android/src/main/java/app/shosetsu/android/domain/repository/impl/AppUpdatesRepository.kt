@@ -101,7 +101,7 @@ class AppUpdatesRepository(
 			iRemoteAppUpdateDataSource.downloadAppUpdate(appUpdateEntity).transform { response ->
 				logV("Retrieved response")
 				if (response.isSuccessful) {
-					response.body?.let { body ->
+					response.body()?.let { body ->
 						iFileAppUpdateDataSource.saveAPK(appUpdateEntity, body.source())
 					} ?: errorResult(ErrorKeys.ERROR_NETWORK, "Empty response body")
 				} else errorResult(ErrorKeys.ERROR_NETWORK, "Failed to download")

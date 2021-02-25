@@ -50,7 +50,7 @@ class RemoteExtensionDataSource(
 						repositoryEntity,
 						extensionEntity
 					)
-				).body!!.string()
+				).body()!!.string()
 			))
 		} catch (e: Exception) {
 			e.toHError()

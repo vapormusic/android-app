@@ -42,7 +42,7 @@ class RemoteExtRepoDataSource(
 			RepoIndex.fromString(
 				client.quickie(
 					"${repo.url}${REPO_DIR_STRUCT}index.json"
-				).body!!.string()
+				).body()!!.string()
 			)
 		))
 	} catch (e: Exception) {

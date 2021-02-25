@@ -46,7 +46,7 @@ class RemoteExtLibDataSource(
 					repoURL,
 					extLibEntity
 				)
-			).body!!.string()
+			).body()!!.string()
 		)
 	} catch (e: Exception) {
 		e.toHError()
